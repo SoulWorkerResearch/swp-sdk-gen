@@ -1,4 +1,4 @@
-// sdk-gen.cpp : This file contains the 'main' function. Program execution begins and ends there.
+// swp-sdk-gen.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
 using namespace std;
@@ -22,7 +22,6 @@ class export_unfucker final
 private:
 	static auto get_symbols(std::ranges::input_range auto&& _values)
 	{
-		using D = decltype(_values);
 		return _values | std::views::transform(unfuck) | std::ranges::to<std::vector>();
 	}
 
@@ -43,6 +42,7 @@ public:
 		const auto exports = reinterpret_cast<PIMAGE_EXPORT_DIRECTORY>(reinterpret_cast<BYTE*>(lib) + va);
 
 		assert(exports->AddressOfNames != 0);
+		
 		const auto names = reinterpret_cast<BYTE**>((reinterpret_cast<DWORD>(lib) + exports->AddressOfNames));
 
 		const auto values =
